@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
+import InputBox from './InputBox.jsx'
 
 class App extends Component {
-  render() {
+  render () {
     return (
       <div className="App">
-        <div className="InputBox" />
+        <InputBox />
         <div className="TimeResult" />
         <div className="Footer" />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

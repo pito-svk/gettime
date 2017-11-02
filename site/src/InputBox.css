@@ -1,0 +1,11 @@
+.InputBox {
+  position: fixed;
+  top: 8%;
+}
+
+.InputBox input, button {
+  border: none;
+  background: none;
+  outline: 0;
+  font-size: 2em;
+}
