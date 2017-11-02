@@ -6,6 +6,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <div className="InputBox" />
+        <div className="TimeResult" />
+        <div className="Footer" />
       </div>
     );
   }
