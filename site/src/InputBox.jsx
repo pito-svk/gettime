@@ -5,7 +5,7 @@ class InputBox extends Component {
   render () {
     return (
       <div className="InputBox">
-        <input autofocus value="New York"></input>
+        <input autoFocus value="New York"></input>
       </div>
     )
   }
