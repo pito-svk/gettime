@@ -3,3 +3,8 @@
   top: 95%;
   left: 44%;
 }
+
+#Footer a {
+  color: grey;
+  text-decoration: inherit;
+}
