@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
 import './App.css'
 import InputBox from './InputBox.jsx'
 import Footer from './Footer.jsx'
