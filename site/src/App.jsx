@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import InputBox from './InputBox.jsx'
+import Footer from './Footer.jsx'
 
 class App extends Component {
   render () {
@@ -9,7 +10,7 @@ class App extends Component {
       <div className="App">
         <InputBox />
         <div className="TimeResult" />
-        <div className="Footer" />
+        <Footer />
       </div>
     )
   }
