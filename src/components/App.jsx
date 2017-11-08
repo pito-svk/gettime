@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './App.css'
+import '../styles/App.css'
 import InputBox from './InputBox.jsx'
 import Footer from './Footer.jsx'
 import TimeResult from './TimeResult.jsx'

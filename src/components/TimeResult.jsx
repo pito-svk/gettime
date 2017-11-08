@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './TimeResult.css'
+import '../styles/TimeResult.css'
 
 class TimeResult extends Component {
   render () {
