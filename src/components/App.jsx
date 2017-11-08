@@ -9,14 +9,24 @@ export default React => {
   const TimeResult = createTimeResult(React)
   const Footer = createFooter(React)
 
-  const App = props => {
-    return (
-      <div className="App">
-        <InputBox />
-        <TimeResult />
-        <Footer />
-      </div>
-    )
+  const App = (props, context) => {
+    return {
+      ...React.Component.prototype,
+      props,
+      context,
+      state: {
+        city: null
+      },
+      render() {
+        return (
+          <div className="App">
+            <InputBox />
+            <TimeResult />
+            <Footer />
+          </div>
+        )
+      }
+    }
   }
 
   return App
