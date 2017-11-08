@@ -1,6 +1,5 @@
 import '../styles/InputBox.css'
 
-// Make statful and then set state to city get from server
 export default React => {
   const InputBox = (props, context) => {
 
