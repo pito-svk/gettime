@@ -9,18 +9,20 @@ export default React => {
   const TimeResult = createTimeResult(React)
   const Footer = createFooter(React)
 
+  const defaultCity = 'New York'
+
   const App = (props, context) => {
     return {
       ...React.Component.prototype,
       props,
       context,
       state: {
-        city: null
+        city: defaultCity
       },
       render() {
         return (
           <div className="App">
-            <InputBox setCityOnRequest={ city => this.setState({ city }) }/>
+            <InputBox city={this.state.city} defaultCity={defaultCity} setCityOnRequest={ city => this.setState({ city }) }/>
             <TimeResult city={this.state.city}/>
             <Footer />
           </div>
