@@ -1,19 +1,18 @@
-import React, { Component } from 'react'
 import '../styles/App.css'
-import InputBox from './InputBox.jsx'
-import Footer from './Footer.jsx'
-import TimeResult from './TimeResult.jsx'
+// import InputBox from './InputBox.jsx'
+import createFooter from './Footer.jsx'
+// import TimeResult from './TimeResult.jsx'
 
-class App extends Component {
-  render () {
+import '../styles/App.css'
+
+export default React => {
+  const Footer = createFooter(React)
+
+  const App = props => {
     return (
-      <div className="App">
-        <InputBox />
-        <TimeResult />
-        <Footer />
-      </div>
+      <Footer />
     )
   }
-}
 
-export default App
+  return App
+}

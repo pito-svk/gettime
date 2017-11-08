@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './styles/index.css'
-import App from './components/App'
+import createApp from './components/App'
+
+const App = createApp(React)
 
 ReactDOM.render(<App />, document.getElementById('root'))
