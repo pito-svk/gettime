@@ -1,14 +1,15 @@
 import '../styles/InputBox.css'
 
-// TODO: implement event handler to correct inputted city
-function onInputKeyPress (event) {
-  if (event.key === 'Enter') {
-    const inputContent = event.target.value
-  }
-}
-
 export default React => {
-  const InputBox = props => {
+  const InputBox = ({ setCityOnRequest }) => {
+    function onInputKeyPress (event) {
+      if (event.key === 'Enter') {
+        const inputContent = event.target.value
+
+        setCityOnRequest(inputContent)
+      }
+    }
+
     return (
       <div className="InputBox">
         <input autoFocus defaultValue='New York' onKeyPress={onInputKeyPress}></input>

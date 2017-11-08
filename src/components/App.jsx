@@ -20,7 +20,7 @@ export default React => {
       render() {
         return (
           <div className="App">
-            <InputBox />
+            <InputBox setCityOnRequest={ city => this.setState({ city }) }/>
             <TimeResult />
             <Footer />
           </div>
