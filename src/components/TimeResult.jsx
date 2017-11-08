@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
 import '../styles/TimeResult.css'
 
-class TimeResult extends Component {
-  render () {
+export default React => {
+  const TimeResult = props => {
     return (
       <div className="TimeResult">
         <h1>{`{TODO: city}`} has {`{TODO: time}`}</h1>
       </div>
     )
   }
-}
 
-export default TimeResult
+  return TimeResult
+}
