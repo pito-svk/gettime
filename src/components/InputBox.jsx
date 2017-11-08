@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
 import '../styles/InputBox.css'
 
-class InputBox extends Component {
-  render () {
+export default React => {
+  const InputBox = props => {
     return (
       <div className="InputBox">
         <input autoFocus value={`{TODO: city}`}></input>
       </div>
     )
   }
-}
 
-export default InputBox
+  return InputBox
+}
