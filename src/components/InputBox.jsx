@@ -6,8 +6,6 @@ export default React => {
 
     return {
       ...React.Component.prototype,
-      props,
-      context,
       state: {
         city: props.defaultCity
       },

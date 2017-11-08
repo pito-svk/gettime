@@ -14,8 +14,6 @@ export default React => {
   const App = (props, context) => {
     return {
       ...React.Component.prototype,
-      props,
-      context,
       state: {
         city: defaultCity
       },
