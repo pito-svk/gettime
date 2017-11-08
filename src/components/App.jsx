@@ -1,4 +1,3 @@
-import '../styles/App.css'
 import createInputBox from './InputBox.jsx'
 import createTimeResult from './TimeResult.jsx'
 import createFooter from './Footer.jsx'
