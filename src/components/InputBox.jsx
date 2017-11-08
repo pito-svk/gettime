@@ -3,13 +3,6 @@ import '../styles/InputBox.css'
 // Make statful and then set state to city get from server
 export default React => {
   const InputBox = (props, context) => {
-    function onInputKeyPress (event) {
-      if (event.key === 'Enter') {
-        const inputContent = event.target.value
-
-        props.setCityOnRequest(inputContent)
-      }
-    }
 
     return {
       ...React.Component.prototype,
@@ -19,9 +12,19 @@ export default React => {
         city: props.defaultCity
       },
       render() {
+        const onInputKeyPress = e => {
+          if (e.key === 'Enter') {
+            const inputContent = e.target.value
+
+            this.setState({ city: inputContent })
+
+            props.setCityOnRequest(inputContent)
+          }
+        }
+
         return (
           <div className="InputBox">
-            <input autoFocus defaultValue={props.defaultCity} onKeyPress={onInputKeyPress}></input>
+            <input value={this.state.city} autoFocus onKeyPress={onInputKeyPress} onChange={ e => this.setState({ city: e.target.value }) }></input>
           </div>
         )
       }
