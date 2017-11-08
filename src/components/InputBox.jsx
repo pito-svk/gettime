@@ -12,7 +12,7 @@ export default React => {
 
     return (
       <div className="InputBox">
-        <input autoFocus defaultValue='New York' onKeyPress={ onInputKeyPress }></input>
+        <input autoFocus defaultValue='New York' onKeyPress={onInputKeyPress}></input>
       </div>
     )
   }

@@ -21,7 +21,7 @@ export default React => {
         return (
           <div className="App">
             <InputBox setCityOnRequest={ city => this.setState({ city }) }/>
-            <TimeResult city={ this.state.city }/>
+            <TimeResult city={this.state.city}/>
             <Footer />
           </div>
         )
