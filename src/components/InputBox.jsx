@@ -1,5 +1,17 @@
 import '../styles/InputBox.css'
 
+async function getCityOffset (city) {
+  try {
+    const offset = await fetch(`/offset/${city}`)
+
+    return offset
+  } catch (err) {
+    console.log(err)
+  }
+
+  return fetch(`/offset/${city}`)
+}
+
 export default React => {
   const InputBox = (props, context) => {
 
@@ -9,13 +21,19 @@ export default React => {
         city: props.defaultCity
       },
       render() {
-        const onInputKeyPress = e => {
+        const onInputKeyPress = async e => {
           if (e.key === 'Enter') {
-            const inputContent = e.target.value
+            try {
+              const inputCity = e.target.value
 
-            this.setState({ city: inputContent })
+              const offset = await getCityOffset(inputCity)
 
-            props.setCityOnRequest(inputContent)
+              this.setState({ city: inputCity })
+
+              props.setCityOnRequest(inputCity)
+            } catch (err) {
+              console.log(err)
+            }
           }
         }
 
