@@ -13,6 +13,11 @@ export default React => {
       state: {
         city: props.defaultCity
       },
+      async componentDidMount() {
+        const offset = await getCityOffset(props.defaultCity)
+
+        props.setTimeOnRequest(offset.time)
+      },
       render() {
         const onInputKeyPress = async e => {
           if (e.key === 'Enter') {
