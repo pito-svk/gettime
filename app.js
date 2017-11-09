@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const request = require('request-promise')
+const moment = require('moment-timezone')
 
 const app = express()
 
@@ -18,9 +19,18 @@ app.get('/api/offset/:city', async (req, res) => {
   const geoNamesResp = await (request.get(`http://ws.geonames.org/timezoneJSON?lat=${lat}&lng=${lng}&username=${process.env.GEO_NAMES_USERNAME}`)
     .then(resp => JSON.parse(resp)))
 
+  const timezoneName = geoNamesResp.timezoneId
+
+  const cityTime = moment.utc()
+    .tz(timezoneName)
+    .format('hh:mm A')
+
   const formattedCityName = googleMapsResp.results[0].address_components[0].long_name
 
-  res.json({ city: formattedCityName })
+  res.json({
+    city: formattedCityName,
+    time: cityTime
+  })
 })
 
 app.get('*', (req, res) => {
