@@ -15,13 +15,14 @@ export default React => {
     return {
       ...React.Component.prototype,
       state: {
+        time: 'TODO - intialize on start',
         city: defaultCity
       },
       render() {
         return (
           <div className="App">
-            <InputBox city={this.state.city} defaultCity={defaultCity} setCityOnRequest={ city => this.setState({ city }) }/>
-            <TimeResult city={this.state.city}/>
+            <InputBox city={this.state.city} defaultCity={defaultCity} setCityOnRequest={ city => this.setState({ city }) } setTimeOnRequest={ time => this.setState({ time }) }/>
+            <TimeResult city={this.state.city} time={this.state.time}/>
             <Footer />
           </div>
         )

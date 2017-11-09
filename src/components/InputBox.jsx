@@ -24,6 +24,7 @@ export default React => {
               this.setState({ city: offset.city })
 
               props.setCityOnRequest(offset.city)
+              props.setTimeOnRequest('...')
             } catch (err) {
               console.log(err)
             }
