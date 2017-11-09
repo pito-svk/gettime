@@ -6,7 +6,9 @@ const app = express()
 app.use(express.static(path.resolve(__dirname, 'build')))
 
 app.get('/api/offset/:city', (req, res) => {
-  res.json({ city: 'TODO' })
+  const inputCity = req.params.city
+
+  res.json({ city: inputCity })
 })
 
 app.get('*', (req, res) => {
