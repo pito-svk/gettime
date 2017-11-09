@@ -19,12 +19,14 @@ export default React => {
             try {
               const inputCity = e.target.value
 
+              props.setTimeOnRequest('...')
+
               const offset = await getCityOffset(inputCity)
 
               this.setState({ city: offset.city })
 
               props.setCityOnRequest(offset.city)
-              props.setTimeOnRequest('...')
+              props.setTimeOnRequest(offset.time)
             } catch (err) {
               console.log(err)
             }
