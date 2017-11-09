@@ -15,7 +15,7 @@ export default React => {
     return {
       ...React.Component.prototype,
       state: {
-        time: 'TODO - intialize on start',
+        time: '...',
         city: defaultCity
       },
       render() {
