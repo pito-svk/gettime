@@ -5,8 +5,8 @@ const app = express()
 
 app.use(express.static(path.resolve(__dirname, 'build')))
 
-app.get('api/offset/:city', (req, res) => {
-  res.json({ status: 'TODO' })
+app.get('/api/offset/:city', (req, res) => {
+  res.json({ city: 'TODO' })
 })
 
 app.get('*', (req, res) => {

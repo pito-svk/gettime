@@ -1,15 +1,8 @@
 import '../styles/InputBox.css'
 
-async function getCityOffset (city) {
-  try {
-    const offset = await fetch(`/offset/${city}`)
-
-    return offset
-  } catch (err) {
-    console.log(err)
-  }
-
-  return fetch(`/offset/${city}`)
+function getCityOffset (city) {
+  return fetch(`api/offset/${city}`)
+    .then(resp => resp.json())
 }
 
 export default React => {
@@ -28,9 +21,9 @@ export default React => {
 
               const offset = await getCityOffset(inputCity)
 
-              this.setState({ city: inputCity })
+              this.setState({ city: offset.city })
 
-              props.setCityOnRequest(inputCity)
+              props.setCityOnRequest(offset.city)
             } catch (err) {
               console.log(err)
             }
