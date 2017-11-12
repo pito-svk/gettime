@@ -1,5 +1,6 @@
 import '../styles/InputBox.css'
 
+// Check for non 200 statuses and throw error on that case
 function getCityOffset (city) {
   return fetch(`api/offset/${city}`)
     .then(resp => resp.json())
