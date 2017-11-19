@@ -19,12 +19,15 @@ function getCityCoordinates (cityName) {
 
   return request.get(url, requestOptions)
     .then(resp => JSON.parse(resp))
-    .then(resp => resp.filter(item => item.type === 'city'))
+    .then(resp => resp.filter(item => {
+      return item.type === 'city' ||
+        item.type === 'town'
+    }))
     .then(resp => {
       const lat = resp[0].lat
       const lng = resp[0].lon
       const alternativeNameOfCity = resp[0].namedetails.alt_name
-      const cityName = resp[0].address.city
+      const cityName = resp[0].address.city || resp[0].address.town
       let formattedCityName
 
       // Solve the case of New York City into New York as
