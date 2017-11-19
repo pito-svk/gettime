@@ -24,24 +24,28 @@ function getCityCoordinates (cityName) {
         item.type === 'town'
     }))
     .then(resp => {
-      const lat = resp[0].lat
-      const lng = resp[0].lon
-      const alternativeNameOfCity = resp[0].namedetails.alt_name
-      const cityName = resp[0].address.city || resp[0].address.town
-      let formattedCityName
+      try {
+        const lat = resp[0].lat
+        const lng = resp[0].lon
+        const alternativeNameOfCity = resp[0].namedetails.alt_name
+        const cityName = resp[0].address.city || resp[0].address.town
+        let formattedCityName
 
-      // Solve the case of New York City into New York as
-      // alternative name
-      if (alternativeNameOfCity &&
-          cityName &&
-          alternativeNameOfCity.length <
-          cityName.length) {
-        formattedCityName = alternativeNameOfCity
-      } else {
-        formattedCityName = cityName
+        // Solve the case of New York City into New York as
+        // alternative name
+        if (alternativeNameOfCity &&
+            cityName &&
+            alternativeNameOfCity.length <
+            cityName.length) {
+          formattedCityName = alternativeNameOfCity
+        } else {
+          formattedCityName = cityName
+        }
+
+        return { lat, lng, formattedCityName }
+      } catch (err) {
+        return Promise.reject(err)
       }
-
-      return { lat, lng, formattedCityName }
     })
 }
 
