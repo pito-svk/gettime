@@ -3,7 +3,13 @@ import '../styles/InputBox.css'
 // Check for non 200 statuses and throw error on that case
 function getCityOffset (city) {
   return fetch(`api/offset/${city}`)
-    .then(resp => resp.json())
+    .then(resp => {
+      if (!resp.ok) {
+        return Promise.reject(resp.statusText)
+      }
+
+      return resp.json()
+    })
 }
 
 export default React => {
@@ -37,7 +43,16 @@ export default React => {
               props.setCityOnRequest(offset.city)
               props.setTimeOnRequest(offset.time)
             } catch (err) {
-              console.log(err)
+              const currentCity = props.getCurrentCity()
+
+              console.log(currentCity)
+
+              const offset = await getCityOffset(currentCity)
+
+              this.setState({ city: offset.city })
+
+              props.setCityOnRequest(offset.city)
+              props.setTimeOnRequest(offset.time)
             }
           }
         }

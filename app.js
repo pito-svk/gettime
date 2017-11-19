@@ -76,7 +76,9 @@ app.get('/api/offset/:city', async (req, res) => {
       time: cityTime
     })
   } catch (err) {
-    return res.json(err)
+    return res
+      .status(400)
+      .json(err)
   }
 })
 
