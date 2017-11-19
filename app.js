@@ -60,8 +60,11 @@ function getTimezoneId ({ lat, lng }) {
 // Send different status when error happens, this also need to be handled on React side to check if fetch does not return status code 200
 app.get('/api/offset/:city', async (req, res) => {
   try {
-    const inputCity = req.params.city
+    // Solve issue with São Paulo for example
+    const inputCity = encodeURIComponent(req.params.city)
+
     const { lat, lng, formattedCityName } = await getCityCoordinates(inputCity)
+
     const timezoneId = await getTimezoneId({ lat, lng })
 
     const cityTime = moment.utc()
