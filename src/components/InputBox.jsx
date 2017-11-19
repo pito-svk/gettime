@@ -45,8 +45,6 @@ export default React => {
             } catch (err) {
               const currentCity = props.getCurrentCity()
 
-              console.log(currentCity)
-
               const offset = await getCityOffset(currentCity)
 
               this.setState({ city: offset.city })
