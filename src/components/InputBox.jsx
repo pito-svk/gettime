@@ -17,6 +17,9 @@ export default React => {
       async componentDidMount() {
         const offset = await getCityOffset(props.defaultCity)
 
+        this.setState({ city: offset.city })
+
+        props.setCityOnRequest(offset.city)
         props.setTimeOnRequest(offset.time)
       },
       render() {
