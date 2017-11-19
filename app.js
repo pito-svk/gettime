@@ -9,15 +9,23 @@ app.use(express.static(path.resolve(__dirname, 'build')))
 
 // TODO: check how can throw error when resp doesn't have status code 200, maybe put option: simple into request options?
 function getCityCoordinates (cityName) {
-  const geocodeUrl = `http://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&sensor=false`
+  const url = `http://nominatim.openstreetmap.org/search?q=${cityName}&format=jsonv2&addressdetails=1`
 
-  return request.get(geocodeUrl)
+  const requestOptions = {
+    headers: {
+      'Accept-Language': 'en'
+    }
+  }
+
+  return request.get(url, requestOptions)
     .then(resp => JSON.parse(resp))
+    .then(resp => resp.filter(item => item.type === 'city'))
     .then(resp => {
-      const lat = resp.results[0].geometry.location.lat
-      const lng = resp.results[0].geometry.location.lng
+      const lat = resp[0].lat
+      const lng = resp[0].lon
+      const formattedCityName = resp[0].address.city
 
-      return { lat, lng }
+      return { lat, lng, formattedCityName }
     })
 }
 
@@ -33,14 +41,12 @@ function getTimezoneId ({ lat, lng }) {
 app.get('/api/offset/:city', async (req, res) => {
   try {
     const inputCity = req.params.city
-    const { lat, lng } = await getCityCoordinates(inputCity)
-    const timezoneId await getTimezoneId({ lat, lng })
+    const { lat, lng, formattedCityName } = await getCityCoordinates(inputCity)
+    const timezoneId = await getTimezoneId({ lat, lng })
 
     const cityTime = moment.utc()
       .tz(timezoneId)
       .format('hh:mm A')
-
-    const formattedCityName = googleMapsResp.results[0].address_components[0].long_name
 
     return res.json({
       city: formattedCityName,
