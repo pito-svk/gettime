@@ -22,7 +22,7 @@ export default React => {
       render() {
         return (
           <div className="App">
-            <InputBox city={this.state.city} defaultCity={defaultCity} setCityOnRequest={ city => this.setState({ city }) } setTimeOnRequest={ time => this.setState({ time }) }/>
+            <InputBox city={this.state.city} defaultCity={defaultCity} setCityOnRequest={ city => this.setState({ city }) } setTimeOnRequest={ time => this.setState({ time }) } getCurrentCity={ () => this.state.city } />
             <TimeResult city={this.state.city} time={this.state.time}/>
             <Footer />
           </div>
