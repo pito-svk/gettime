@@ -57,7 +57,12 @@ export default React => {
 
         return (
           <div className="InputBox">
-            <input value={this.state.city} autoFocus onKeyPress={onInputKeyPress} onChange={ e => this.setState({ city: e.target.value }) }></input>
+            <input
+              value={ this.state.city }
+              onKeyPress={ onInputKeyPress }
+              onChange={ e => this.setState({ city: e.target.value }) }
+              autoFocus>
+            </input>
           </div>
         )
       }
