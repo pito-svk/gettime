@@ -35,6 +35,8 @@ function getCityCoordinates (cityName) {
         // alternative name
         if (alternativeNameOfCity &&
             cityName &&
+            // Solve Brazilia -> RA 1 as alternate name bug
+            alternativeNameOfCity.length > 4 &&
             alternativeNameOfCity.length <
             cityName.length) {
           formattedCityName = alternativeNameOfCity
