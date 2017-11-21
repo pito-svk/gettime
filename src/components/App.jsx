@@ -22,19 +22,21 @@ export default React => {
         const setCityOnRequest = city => this.setState({ city })
         const setTimeOnRequest = time => this.setState({ time })
         const getCurrentCity = () => this.state.city
+        const currentCity = this.state.city
+        const currentTime = this.state.time
 
         return (
           <div className="App">
             <InputBox
-              city={ this.state.city }
+              city={ currentCity }
               defaultCity={ defaultCity }
               setCityOnRequest={ setCityOnRequest }
               setTimeOnRequest={ setTimeOnRequest }
               getCurrentCity={ getCurrentCity }
             />
             <TimeResult
-              city={ this.state.city }
-              time={ this.state.time }
+              city={ currentCity }
+              time={ currentTime }
             />
             <Footer />
           </div>
