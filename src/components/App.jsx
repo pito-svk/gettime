@@ -4,7 +4,6 @@ import createInputBox from './InputBox.jsx'
 import createTimeResult from './TimeResult.jsx'
 import createFooter from './Footer.jsx'
 
-
 export default React => {
   const InputBox = createInputBox(React)
   const TimeResult = createTimeResult(React)
@@ -20,14 +19,18 @@ export default React => {
         city: defaultCity
       },
       render() {
+        const setCityOnRequest = city => this.setState({ city })
+        const setTimeOnRequest = time => this.setState({ time })
+        const getCurrentCity = () => this.state.city
+
         return (
           <div className="App">
             <InputBox
               city={ this.state.city }
               defaultCity={ defaultCity }
-              setCityOnRequest={ city => this.setState({ city }) }
-              setTimeOnRequest={ time => this.setState({ time }) }
-              getCurrentCity={ () => this.state.city }
+              setCityOnRequest={ setCityOnRequest }
+              setTimeOnRequest={ setTimeOnRequest }
+              getCurrentCity={ getCurrentCity }
             />
             <TimeResult
               city={ this.state.city }
