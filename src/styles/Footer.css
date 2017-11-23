@@ -1,7 +1,7 @@
 #Footer {
-  position: fixed;
-  top: 95%;
-  left: 44%;
+  margin-top: 283px;
+  margin-left: 528px;
+  padding: 10px;
 }
 
 #Footer a {

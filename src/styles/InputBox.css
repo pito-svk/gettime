@@ -1,6 +1,6 @@
 .InputBox {
-  position: fixed;
-  top: 8%;
+  margin-top: 20px;
+  padding: 10px;
 }
 
 .InputBox input, button {
