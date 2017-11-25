@@ -14,13 +14,12 @@ function getCityOffset (city) {
 
 export default React => {
   const InputBox = (props, context) => {
-
     return {
       ...React.Component.prototype,
       state: {
         city: props.defaultCity
       },
-      async componentDidMount() {
+      async componentDidMount () {
         const offset = await getCityOffset(props.defaultCity)
 
         this.setState({ city: offset.city })
@@ -28,7 +27,7 @@ export default React => {
         props.setCityOnRequest(offset.city)
         props.setTimeOnRequest(offset.time)
       },
-      render() {
+      render () {
         const onInputKeyPress = async e => {
           if (e.key === 'Enter') {
             try {
@@ -56,13 +55,12 @@ export default React => {
         }
 
         return (
-          <div className="InputBox">
+          <div className='InputBox'>
             <input
-              value={ this.state.city }
-              onKeyPress={ onInputKeyPress }
-              onChange={ e => this.setState({ city: e.target.value }) }
-              autoFocus>
-            </input>
+              value={this.state.city}
+              onKeyPress={onInputKeyPress}
+              onChange={e => this.setState({ city: e.target.value })}
+              autoFocus />
           </div>
         )
       }
