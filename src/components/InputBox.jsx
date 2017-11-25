@@ -1,4 +1,5 @@
 import '../styles/InputBox.css'
+import fetch from 'isomorphic-fetch'
 
 // Check for non 200 statuses and throw error on that case
 function getCityOffset (city) {
