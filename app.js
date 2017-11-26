@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === 'production') {
 
   app.use(webpackHotMiddleware(compiler, {
     log: console.log,
+    hot: true,
     reload: true
   }))
 }
