@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const request = require('request-promise')
 const moment = require('moment-timezone')
-const { compileAndHotReload } = require('../devUtils')
+const { compileAndHotReload } = require('./devUtils')
 
 const app = express()
 
