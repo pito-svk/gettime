@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const request = require('request-promise')
 const moment = require('moment-timezone')
-const { compileAndHotReload } = require('./devUtils')
+const { compileAndHotReload } = require('../devUtils')
 
 const app = express()
 
@@ -14,15 +14,23 @@ if (process.env.NODE_ENV === 'production') {
 
 // TODO: check how can throw error when resp doesn't have status code 200, maybe put option: simple into request options?
 function getCityCoordinates (cityName) {
-  const url = `http://nominatim.openstreetmap.org/search?q=${cityName}&format=jsonv2&addressdetails=1&namedetails=1`
+  const url = process.env.GET_CITY_COORDINATES_URL
 
   const requestOptions = {
     headers: {
-      'Accept-Language': 'en'
+      'Accept-Language': 'en',
+      Accept: 'application/json'
+    },
+    query: {
+      q: cityName,
+      format: 'jsonv2',
+      addressdetails: 1,
+      namedetails: 1
     }
   }
 
   return request.get(url, requestOptions)
+    // TODO: remove parsing?
     .then(resp => JSON.parse(resp))
     .then(resp => resp.filter(item => {
       return item.type === 'city' ||
