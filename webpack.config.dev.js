@@ -43,11 +43,6 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .map(folder => path.resolve(appDirectory, folder))
   .join(path.delimiter)
 
-const babelQuery = {
-  presets: ['react', 'es2015'],
-  plugins: ['transform-object-rest-spread', 'react-hot-loader/babel']
-}
-
 module.exports = {
   devtool: 'eval',
   context: srcPath,
@@ -68,16 +63,6 @@ module.exports = {
     publicPath: '/',
     devtoolModuleFilenameTemplate: info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   },
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin({
-      '__CLIENT__': true,
-      '__PRODUCTION__': false,
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
-  ],
   resolve: {
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     modules: ['node_modules', nodeModulesPath].concat(
