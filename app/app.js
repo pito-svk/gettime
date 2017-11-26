@@ -18,11 +18,11 @@ function getCityCoordinates (cityName) {
 
   const requestOptions = {
     headers: {
-      'Accept-Language': 'en',
-      Accept: 'application/json'
+      'Accept-Language': 'en'
     },
-    query: {
-      q: cityName,
+    json: true,
+    qs: {
+      q: decodeURIComponent(cityName),
       format: 'jsonv2',
       addressdetails: 1,
       namedetails: 1
@@ -30,8 +30,6 @@ function getCityCoordinates (cityName) {
   }
 
   return request.get(url, requestOptions)
-    // TODO: remove parsing?
-    .then(resp => JSON.parse(resp))
     .then(resp => resp.filter(item => {
       return item.type === 'city' ||
         item.type === 'town'
@@ -95,10 +93,6 @@ app.get('/api/offset/:city', async (req, res) => {
       .status(400)
       .json(err)
   }
-})
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 })
 
 module.exports = app
