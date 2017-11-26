@@ -5,7 +5,26 @@ const moment = require('moment-timezone')
 
 const app = express()
 
-app.use(express.static(path.resolve(__dirname, 'build')))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.resolve(__dirname, 'build')))
+} else {
+  const webpack = require('webpack')
+  const devWebpackConfig = require('./webpack.config.dev.js')
+  const webpackDevMiddleware = require('webpack-dev-middleware')
+  const webpackHotMiddleware = require('webpack-hot-middleware')
+  const compiler = webpack(devWebpackConfig)
+
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    hot: true,
+    publicPath: '/'
+  }))
+
+  app.use(webpackHotMiddleware(compiler, {
+    log: console.log,
+    reload: true
+  }))
+}
 
 // TODO: check how can throw error when resp doesn't have status code 200, maybe put option: simple into request options?
 function getCityCoordinates (cityName) {
