@@ -2,7 +2,7 @@ const request = require('request-promise')
 
 // TODO: check how can throw error when resp doesn't have status code 200, maybe put option: simple into request options?
 exports.getCityCoordinates = cityName => {
-  const url = process.env.GET_CITY_COORDINATES_URL
+  const url = 'http://nominatim.openstreetmap.org/search'
 
   const requestOptions = {
     headers: {
