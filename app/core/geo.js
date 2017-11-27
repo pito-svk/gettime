@@ -51,9 +51,17 @@ exports.getCityCoordinates = cityName => {
 }
 
 exports.getTimezoneId = ({ lat, lng }) => {
-  const timezoneInfoUrl = `http://ws.geonames.org/timezoneJSON?lat=${lat}&lng=${lng}&username=${process.env.GEO_NAMES_USERNAME}`
+  const url = 'http://ws.geonames.org/timezoneJSON'
 
-  return request.get(timezoneInfoUrl)
-    .then(resp => JSON.parse(resp))
+  const requestOptions = {
+    json: true,
+    qs: {
+      username: process.env.GEO_NAMES_USERNAME,
+      lat,
+      lng
+    }
+  }
+
+  return request.get(url, requestOptions)
     .then(resp => resp.timezoneId)
 }
