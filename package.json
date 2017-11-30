@@ -1,7 +1,6 @@
 {
   "name": "site",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
