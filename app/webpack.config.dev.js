@@ -9,6 +9,7 @@ const nodeModulesPath = path.resolve(__dirname, './node_modules')
 const packageJsonPath = path.resolve(__dirname, './package.json')
 const appHtmlPath = path.resolve(__dirname, './public/index.html')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -28,6 +29,13 @@ const raw = Object.keys(process.env)
     PUBLIC_URL: ''
   }
     )
+
+const stringified = {
+  'process.env': Object.keys(raw).reduce((env, key) => {
+    env[key] = JSON.stringify(raw[key])
+    return env
+  }, {})
+}
 
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
@@ -162,7 +170,9 @@ module.exports = {
       template: appHtmlPath
     }),
     new webpack.NamedModulesPlugin(),
+    new webpack.DefinePlugin(stringified),
     new webpack.HotModuleReplacementPlugin(),
+    new CaseSensitivePathsPlugin(),
     new WatchMissingNodeModulesPlugin(nodeModulesPath),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ],
