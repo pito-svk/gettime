@@ -37,7 +37,6 @@ const stringified = {
   }, {})
 }
 
-// TODO: appDirectory is not defined
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
