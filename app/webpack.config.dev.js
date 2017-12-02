@@ -30,13 +30,6 @@ const raw = Object.keys(process.env)
   }
     )
 
-const stringified = {
-  'process.env': Object.keys(raw).reduce((env, key) => {
-    env[key] = JSON.stringify(raw[key])
-    return env
-  }, {})
-}
-
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
@@ -170,7 +163,6 @@ module.exports = {
       template: appHtmlPath
     }),
     new webpack.NamedModulesPlugin(),
-    new webpack.DefinePlugin(stringified),
     new webpack.HotModuleReplacementPlugin(),
     new CaseSensitivePathsPlugin(),
     new WatchMissingNodeModulesPlugin(nodeModulesPath),
