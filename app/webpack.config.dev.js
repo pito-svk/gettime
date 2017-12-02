@@ -41,7 +41,6 @@ const stringified = {
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
-  .map(folder => path.resolve(appDirectory, folder))
   .join(path.delimiter)
 
 module.exports = {
