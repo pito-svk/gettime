@@ -1,4 +1,7 @@
 .App {
   padding: 2%;
   font-family: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
