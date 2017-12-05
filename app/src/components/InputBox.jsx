@@ -1,5 +1,6 @@
 import '../styles/InputBox.css'
 import fetch from 'isomorphic-fetch'
+import { connect } from 'react-redux'
 
 // Check for non 200 statuses and throw error on that case
 function getCityOffset (city) {
@@ -14,19 +15,14 @@ function getCityOffset (city) {
 }
 
 export default React => {
-  const InputBox = (props, context) => {
+  const InputBox = ({ city, previousCity, setPreviousCity, setCity, setTime }) => {
     return {
       ...React.Component.prototype,
-      state: {
-        city: props.defaultCity
-      },
       async componentDidMount () {
-        const offset = await getCityOffset(props.defaultCity)
+        const offset = await getCityOffset(city)
 
-        this.setState({ city: offset.city })
-
-        props.setCityOnRequest(offset.city)
-        props.setTimeOnRequest(offset.time)
+        setCity(offset.city)
+        setTime(offset.time)
       },
       render () {
         const onInputKeyPress = async e => {
@@ -34,23 +30,19 @@ export default React => {
             try {
               const inputCity = e.target.value
 
-              props.setTimeOnRequest('...')
+              setTime('...')
 
               const offset = await getCityOffset(inputCity)
 
-              this.setState({ city: offset.city })
-
-              props.setCityOnRequest(offset.city)
-              props.setTimeOnRequest(offset.time)
+              setPreviousCity(city)
+              setCity(offset.city)
+              setTime(offset.time)
             } catch (err) {
-              const currentCity = props.getCurrentCity()
-
+              const currentCity = previousCity
               const offset = await getCityOffset(currentCity)
 
-              this.setState({ city: offset.city })
-
-              props.setCityOnRequest(offset.city)
-              props.setTimeOnRequest(offset.time)
+              setCity(offset.city)
+              setTime(offset.time)
             }
           }
         }
@@ -58,7 +50,7 @@ export default React => {
         return (
           <div className='InputBox'>
             <input
-              value={this.state.city}
+              defaultValue={city}
               onKeyPress={onInputKeyPress}
               onChange={e => this.setState({ city: e.target.value })}
               autoFocus />
@@ -68,5 +60,26 @@ export default React => {
     }
   }
 
-  return InputBox
+  const mapStateToProps = state => ({ city: state.city, previousCity: state.previousCity })
+
+  const mapDispatchToProps = dispatch => {
+    return {
+      setPreviousCity: city => {
+        dispatch({ type: 'SET_PREVIOUS_CITY', city })
+      },
+      setCity: city => {
+        dispatch({ type: 'SET_CITY', city })
+      },
+      setTime: time => {
+        dispatch({ type: 'SET_TIME', time })
+      }
+    }
+  }
+
+  const InputBoxWithReduxStore = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(InputBox)
+
+  return InputBoxWithReduxStore
 }

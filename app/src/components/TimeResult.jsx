@@ -1,13 +1,23 @@
 import '../styles/TimeResult.css'
+import { connect } from 'react-redux'
 
 export default React => {
-  const TimeResult = props => {
+  const TimeResult = ({ city, time }) => {
     return (
       <div className='TimeResult'>
-        <h1>{props.city} has {props.time}</h1>
+        <h1>{city} has {time}</h1>
       </div>
     )
   }
 
-  return TimeResult
+  const mapStateToProps = state => ({
+    city: state.city,
+    time: state.time
+  })
+
+  const TimeResultWithReduxStore = connect(
+    mapStateToProps
+  )(TimeResult)
+
+  return TimeResultWithReduxStore
 }
