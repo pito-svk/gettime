@@ -47,7 +47,6 @@ export default React => {
           }
         }
 
-
       // Move focus at end of input
       const moveFocusAtEnd = async e => {
         var temp_value = e.target.value
