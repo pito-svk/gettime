@@ -47,12 +47,20 @@ export default React => {
           }
         }
 
+
+      // Move focus at end of input
+      const moveFocusAtEnd = async e => {
+        var temp_value = e.target.value
+        e.target.value = ''
+        e.target.value = temp_value
+      }
+
         return (
           <div className='InputBox'>
             <input
               defaultValue={city}
               onKeyPress={onInputKeyPress}
-              onChange={e => this.setState({ city: e.target.value })}
+              onFocus={moveFocusAtEnd}
               autoFocus />
           </div>
         )
