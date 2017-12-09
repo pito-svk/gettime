@@ -2,10 +2,6 @@ import '../styles/InputBox.css'
 import { getCityTime } from '../remote/cityTime'
 import { connect } from 'react-redux'
 
-const mapStateToProps = state => ({
-  city: state.city
-})
-
 const mapDispatchToProps = dispatch => {
   return {
     setCity: city => {
@@ -68,7 +64,7 @@ export default React => {
   }
 
   const InputBoxWithReduxStore = connect(
-    mapStateToProps,
+    ({ city }) => ({ city }),
     mapDispatchToProps
   )(InputBox)
 
