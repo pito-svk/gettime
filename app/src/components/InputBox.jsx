@@ -1,84 +1,68 @@
 import '../styles/InputBox.css'
-import fetch from 'isomorphic-fetch'
+import { getCityTime } from '../remote/cityTime'
 import { connect } from 'react-redux'
 
-// Check for non 200 statuses and throw error on that case
-function getCityOffset (city) {
-  return fetch(`api/offset/${city}`)
-    .then(resp => {
-      if (!resp.ok) {
-        return Promise.reject(resp.statusText)
-      }
+const mapStateToProps = state => ({
+  city: state.city
+})
 
-      return resp.json()
-    })
+const mapDispatchToProps = dispatch => {
+  return {
+    setCity: city => {
+      dispatch({ type: 'SET_CITY', city })
+    },
+    setTime: time => {
+      dispatch({ type: 'SET_TIME', time })
+    }
+  }
+}
+
+function onInputKeyPress ({ city, setCity, setTime }) {
+  return async e => {
+    if (e.key === 'Enter') {
+      try {
+        const inputCity = e.target.value
+
+        setTime('...')
+
+        const { city: resultCity, time: resultTime } = await getCityTime(inputCity)
+
+        setCity(resultCity)
+        setTime(resultTime)
+      } catch (err) {
+        const { city: resultCity, time: resultTime }  = await getCityTime(city)
+
+        setCity(resultCity)
+        setTime(resultTime)
+      }
+    }
+  }
+}
+
+const moveFocusAtEnd = e => {
+  const temp_value = e.target.value
+  e.target.value = ''
+  e.target.value = temp_value
 }
 
 export default React => {
-  const InputBox = ({ city, previousCity, setPreviousCity, setCity, setTime }) => {
+  const InputBox = ({ city, setCity, setTime }) => {
     return {
-      ...React.Component.prototype,
       async componentDidMount () {
-        const offset = await getCityOffset(city)
-
-        setCity(offset.city)
-        setTime(offset.time)
+        const { city: resultCity, time: resultTime } = await getCityTime(city)
+        setCity(resultCity)
+        setTime(resultTime)
       },
       render () {
-        const onInputKeyPress = async e => {
-          if (e.key === 'Enter') {
-            try {
-              const inputCity = e.target.value
-
-              setTime('...')
-
-              const offset = await getCityOffset(inputCity)
-
-              setPreviousCity(city)
-              setCity(offset.city)
-              setTime(offset.time)
-            } catch (err) {
-              const currentCity = previousCity
-              const offset = await getCityOffset(currentCity)
-
-              setCity(offset.city)
-              setTime(offset.time)
-            }
-          }
-        }
-
-      // Move focus at end of input
-      const moveFocusAtEnd = e => {
-        const temp_value = e.target.value
-        e.target.value = ''
-        e.target.value = temp_value
-      }
-
         return (
           <div className='InputBox'>
             <input
               defaultValue={city}
-              onKeyPress={onInputKeyPress}
+              onKeyPress={onInputKeyPress({ city, setCity, setTime })}
               onFocus={moveFocusAtEnd}
               autoFocus />
           </div>
         )
-      }
-    }
-  }
-
-  const mapStateToProps = state => ({ city: state.city, previousCity: state.previousCity })
-
-  const mapDispatchToProps = dispatch => {
-    return {
-      setPreviousCity: city => {
-        dispatch({ type: 'SET_PREVIOUS_CITY', city })
-      },
-      setCity: city => {
-        dispatch({ type: 'SET_CITY', city })
-      },
-      setTime: time => {
-        dispatch({ type: 'SET_TIME', time })
       }
     }
   }
