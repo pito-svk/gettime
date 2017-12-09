@@ -24,17 +24,18 @@ exports.getCityCoordinates = cityName => {
     }))
     .then(resp => {
       try {
+        // TODO: Handle resp[0] for undefined values
         const lat = resp[0].lat
         const lng = resp[0].lon
         const alternativeNameOfCity = resp[0].namedetails.alt_name
         const cityName = resp[0].address.city || resp[0].address.town
         let formattedCityName
 
-        // Solve the case of New York City into New York as
+        // TODO: Solve the case of New York City into New York as
         // alternative name
         if (alternativeNameOfCity &&
             cityName &&
-            // Solve Brazilia -> RA 1 as alternate name bug
+            // TODO: Solve Brazilia -> RA 1 as alternate name bug
             alternativeNameOfCity.length > 4 &&
             alternativeNameOfCity.length <
             cityName.length) {
