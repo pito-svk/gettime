@@ -10,13 +10,8 @@ export default React => {
     )
   }
 
-  const mapStateToProps = state => ({
-    city: state.city,
-    time: state.time
-  })
-
   const TimeResultWithReduxStore = connect(
-    mapStateToProps
+    ({ city, time }) => ({ city, time })
   )(TimeResult)
 
   return TimeResultWithReduxStore
