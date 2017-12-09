@@ -1,8 +1,8 @@
-export default (state = { city: 'New York', time: '...' }, { previousCity, city, time, type } = {}
+const STATE_DEFAULTS = { city: 'New York', time: '...' }
+
+export default (state = STATE_DEFAULTS, { type, city, time } = {}
   ) => {
   switch (type) {
-    case 'SET_PREVIOUS_CITY':
-      return { ...state, previousCity }
     case 'SET_CITY':
       return { ...state, city }
     case 'SET_TIME':
