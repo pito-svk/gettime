@@ -20,10 +20,7 @@ export default React => {
       )
     }
 
-    return {
-      ...React.Component.prototype,
-      render
-    }
+    return { render }
   }
 
   return App
