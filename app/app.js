@@ -5,6 +5,7 @@ const { getOffset } = require('./features/offset')
 
 const app = express()
 
+// TODO: Experimental - make also support for GraphQL
 app.get('/api/offset/:city', getOffset)
 
 if (process.env.NODE_ENV === 'production') {
