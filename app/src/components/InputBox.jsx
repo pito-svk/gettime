@@ -13,28 +13,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-function onInputKeyPress ({ city, setCity, setTime }) {
-  return async e => {
-    if (e.key === 'Enter') {
-      try {
-        const inputCity = e.target.value
-
-        setTime('...')
-
-        const { city: resultCity, time: resultTime } = await getCityTime(inputCity)
-
-        setCity(resultCity)
-        setTime(resultTime)
-      } catch (err) {
-        const { city: resultCity, time: resultTime }  = await getCityTime(city)
-
-        setCity(resultCity)
-        setTime(resultTime)
-      }
-    }
-  }
-}
-
 const moveFocusAtEnd = ({ target }) => {
   const tempValue = target.value
   target.value = ''
@@ -43,24 +21,36 @@ const moveFocusAtEnd = ({ target }) => {
 
 export default React => {
   const InputBox = ({ city, setCity, setTime }) => {
-    return {
-      async componentDidMount () {
-        const { city: resultCity, time: resultTime } = await getCityTime(city)
-        setCity(resultCity)
-        setTime(resultTime)
-      },
-      render () {
-        return (
-          <div className='InputBox'>
-            <input
-              defaultValue={city}
-              onKeyPress={onInputKeyPress({ city, setCity, setTime })}
-              onFocus={moveFocusAtEnd}
-              autoFocus />
-          </div>
-        )
-      }
+
+    async function onInputKeyPress (e) {
+      if (e.key === 'Enter') {
+          try {
+            const inputCity = e.target.value
+
+            setTime('...')
+
+            const { city: resultCity, time: resultTime } = await getCityTime(inputCity)
+
+            setCity(resultCity)
+            setTime(resultTime)
+          } catch (err) {
+            const { city: resultCity, time: resultTime }  = await getCityTime(city)
+
+            setCity(resultCity)
+            setTime(resultTime)
+          }
+        }
     }
+
+    return (
+      <div className='InputBox'>
+        <input
+          defaultValue={city}
+          onKeyPress={onInputKeyPress}
+          onFocus={moveFocusAtEnd}
+          autoFocus />
+      </div>
+    )
   }
 
   const InputBoxWithReduxStore = connect(
