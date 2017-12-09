@@ -35,10 +35,10 @@ function onInputKeyPress ({ city, setCity, setTime }) {
   }
 }
 
-const moveFocusAtEnd = e => {
-  const temp_value = e.target.value
-  e.target.value = ''
-  e.target.value = temp_value
+const moveFocusAtEnd = ({ target }) => {
+  const tempValue = target.value
+  target.value = ''
+  target.value = tempValue
 }
 
 export default React => {
