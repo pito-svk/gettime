@@ -19,34 +19,37 @@ const moveFocusAtEnd = ({ target }) => {
   target.value = tempValue
 }
 
+function createOnInputEnter ({ city, setCity, setTime }) {
+  return async ({ key, target }) => {
+    if (key === 'Enter') {
+      try {
+        const inputCity = target.value
+
+        setTime('...')
+
+        const { city: resultCity, time: resultTime } = await getCityTime(inputCity)
+
+        setCity(resultCity)
+        setTime(resultTime)
+      } catch (err) {
+        const { city: resultCity, time: resultTime }  = await getCityTime(city)
+
+        setCity(resultCity)
+        setTime(resultTime)
+      }
+    }
+  }
+}
+
 export default React => {
   const InputBox = ({ city, setCity, setTime }) => {
-
-    async function onInputKeyPress (e) {
-      if (e.key === 'Enter') {
-          try {
-            const inputCity = e.target.value
-
-            setTime('...')
-
-            const { city: resultCity, time: resultTime } = await getCityTime(inputCity)
-
-            setCity(resultCity)
-            setTime(resultTime)
-          } catch (err) {
-            const { city: resultCity, time: resultTime }  = await getCityTime(city)
-
-            setCity(resultCity)
-            setTime(resultTime)
-          }
-        }
-    }
+    const onInputEnter = createOnInputEnter({ city, setCity, setTime })
 
     return (
       <div className='InputBox'>
         <input
           defaultValue={city}
-          onKeyPress={onInputKeyPress}
+          onKeyPress={onInputEnter}
           onFocus={moveFocusAtEnd}
           autoFocus />
       </div>
