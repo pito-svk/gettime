@@ -1,4 +1,5 @@
 import '../styles/InputBox.css'
+import { getCityTime } from '../remote/cityTime'
 
 const moveFocusAtEnd = ({ target }) => {
   const tempValue = target.value
@@ -29,18 +30,29 @@ function createOnInputEnter ({ city, setCity, setTime, getCityTime }) {
 }
 
 export default React => {
-  const InputBox = ({ city, setCity, setTime, getCityTime }) => {
+  const InputBox = ({ city, setCity, setTime }) => {
     const onInputEnter = createOnInputEnter({ city, setCity, setTime, getCityTime })
 
-    return (
-      <div className='InputBox'>
-        <input
-          defaultValue={city}
-          onKeyPress={onInputEnter}
-          onFocus={moveFocusAtEnd}
-          autoFocus />
-      </div>
-    )
+    const componentDidMount = async () => {
+      const { city: resultCity, time: resultTime } = await getCityTime(city)
+
+      setCity(resultCity)
+      setTime(resultTime)
+    }
+
+    const render = () => {
+      return (
+        <div className='InputBox'>
+          <input
+            defaultValue={city}
+            onKeyPress={onInputEnter}
+            onFocus={moveFocusAtEnd}
+            autoFocus />
+        </div>
+      )
+    }
+
+    return { render, componentDidMount }
   }
 
   return InputBox
