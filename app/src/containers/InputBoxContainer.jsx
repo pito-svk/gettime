@@ -1,4 +1,4 @@
-import createInputBox from '../components/InputBox.jsx'
+import createInputBox from '../components/InputBox'
 import { connect } from 'react-redux'
 
 const mapDispatchToProps = dispatch => {

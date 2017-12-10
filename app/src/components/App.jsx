@@ -1,8 +1,8 @@
 import '../styles/App.css'
 
 import createInputBoxContainer from '../containers/InputBoxContainer.jsx'
-import createTimeResult from './TimeResult.jsx'
-import createFooter from './Footer.jsx'
+import createTimeResult from './TimeResult'
+import createFooter from './Footer'
 
 export default React => {
   const InputBoxContainer = createInputBoxContainer(React)
