@@ -1,11 +1,11 @@
 import '../styles/App.css'
 
-import createInputBox from './InputBox.jsx'
+import createInputBoxContainer from '../containers/InputBoxContainer.jsx'
 import createTimeResult from './TimeResult.jsx'
 import createFooter from './Footer.jsx'
 
 export default React => {
-  const InputBox = createInputBox(React)
+  const InputBoxContainer = createInputBoxContainer(React)
   const TimeResult = createTimeResult(React)
   const Footer = createFooter(React)
 
@@ -13,7 +13,7 @@ export default React => {
     const render = () => {
       return (
         <div className='App'>
-          <InputBox />
+          <InputBoxContainer />
           <TimeResult />
           <Footer />
         </div>
