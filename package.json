@@ -12,7 +12,7 @@
     "react-scripts": "^1.0.17",
     "redux": "^3.7.2",
     "request-promise": "^4.2.2",
-    "webpack": "^3.9.1",
+    "webpack": "^3.10.0",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-hot-middleware": "^2.21.0",
     "winston": "^2.4.0"
