@@ -1,5 +1,9 @@
-import createInputBox from '../components/InputBox'
+import InputBox from '../components/InputBox'
 import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => {
+  return { city: state.city }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -13,10 +17,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default React => {
-  const InputBox = createInputBox(React)
-
   const InputBoxWithReduxStore = connect(
-    ({ city }) => ({ city }),
+    mapStateToProps,
     mapDispatchToProps
   )(InputBox)
 

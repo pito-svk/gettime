@@ -1,11 +1,6 @@
 import '../styles/InputBox.css'
 import { getCityTime } from '../remote/cityTime'
-
-const moveFocusAtEnd = ({ target }) => {
-  const tempValue = target.value
-  target.value = ''
-  target.value = tempValue
-}
+import React, { Component } from 'react'
 
 function createOnInputEnter ({ city, setCity, setTime, getCityTime }) {
   return async ({ key, target }) => {
@@ -19,41 +14,47 @@ function createOnInputEnter ({ city, setCity, setTime, getCityTime }) {
 
         setCity(resultCity)
         setTime(resultTime)
+
+        target.value = resultCity
       } catch (err) {
         const { city: resultCity, time: resultTime } = await getCityTime(city)
 
         setCity(resultCity)
         setTime(resultTime)
+
+        target.value = resultCity
       }
     }
   }
 }
 
-export default React => {
-  const InputBox = ({ city, setCity, setTime }) => {
-    const onInputEnter = createOnInputEnter({ city, setCity, setTime, getCityTime })
+const moveFocusAtEnd = ({ target }) => {
+  const tempValue = target.value
+  target.value = ''
+  target.value = tempValue
+}
 
-    const componentDidMount = async () => {
-      const { city: resultCity, time: resultTime } = await getCityTime(city)
+class InputBox extends Component {
+  async componentDidMount () {
+    const { city: resultCity, time: resultTime } = await getCityTime(this.props.city)
 
-      setCity(resultCity)
-      setTime(resultTime)
-    }
-
-    const render = () => {
-      return (
-        <div className='InputBox'>
-          <input
-            defaultValue={city}
-            onKeyPress={onInputEnter}
-            onFocus={moveFocusAtEnd}
-            autoFocus />
-        </div>
-      )
-    }
-
-    return { render, componentDidMount }
+    this.props.setCity(resultCity)
+    this.props.setTime(resultTime)
   }
 
-  return InputBox
+  render () {
+    const onInputEnter = createOnInputEnter({ city: this.props.city, setCity: this.props.setCity, setTime: this.props.setTime, getCityTime })
+
+    return (
+      <div className='InputBox'>
+        <input
+          defaultValue={this.props.city}
+          onKeyPress={onInputEnter}
+          onFocus={moveFocusAtEnd}
+          autoFocus />
+      </div>
+    )
+  }
 }
+
+export { InputBox as default }
