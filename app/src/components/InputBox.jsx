@@ -1,6 +1,7 @@
 import '../styles/InputBox.css'
 import { getCityTime } from '../remote/cityTime'
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 function createOnInputEnter ({ city, setCity, setTime, getCityTime }) {
   return async ({ key, target }) => {
@@ -55,6 +56,12 @@ class InputBox extends Component {
       </div>
     )
   }
+}
+
+InputBox.propTypes = {
+  city: PropTypes.string.isRequired,
+  setCity: PropTypes.func.isRequired,
+  setTime: PropTypes.func.isRequired
 }
 
 export { InputBox as default }
