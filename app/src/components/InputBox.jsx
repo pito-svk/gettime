@@ -37,10 +37,23 @@ const moveFocusAtEnd = ({ target }) => {
 
 class InputBox extends Component {
   async componentDidMount () {
-    const { city: resultCity, time: resultTime } = await getCityTime(this.props.city)
+    try {
+      const { city: resultCity, time: resultTime } = await getCityTime(this.props.initialCity || this.props.city)
 
-    this.props.setCity(resultCity)
-    this.props.setTime(resultTime)
+      this.props.setCity(resultCity)
+      this.props.setTime(resultTime)
+      this.props.setInitialCity(null)
+
+      this.textInput.value = resultCity
+    } catch (err) {
+      const { city: resultCity, time: resultTime } = await getCityTime(this.props.city)
+
+      this.props.setCity(resultCity)
+      this.props.setTime(resultTime)
+      this.props.setInitialCity(null)
+
+      this.textInput.value = resultCity
+    }
   }
 
   render () {
@@ -49,7 +62,8 @@ class InputBox extends Component {
     return (
       <div className='InputBox'>
         <input
-          defaultValue={this.props.city}
+          ref={(input) => { this.textInput = input }}
+          defaultValue={this.props.initialCity || this.props.city}
           onKeyPress={onInputEnter}
           onFocus={moveFocusAtEnd}
           autoFocus />
