@@ -4,22 +4,21 @@ import './styles/index.css'
 import createApp from './components/App'
 import storeReducer from './store'
 import { Provider } from 'react-redux'
-import { ConnectedRouter, routerReducer } from 'react-router-redux'
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
-import { createStore, combineReducers } from 'redux'
-
-const preloadedState =
-  window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  window.__REDUX_DEVTOOLS_EXTENSION__()
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const history = createHistory()
+
+const middleware = routerMiddleware(history)
 
 const store = createStore(
   combineReducers({
     store: storeReducer,
     routing: routerReducer
   }),
-  preloadedState
+  composeWithDevTools(applyMiddleware(middleware))
 )
 
 const App = createApp(React)

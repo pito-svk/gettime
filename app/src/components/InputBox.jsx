@@ -3,7 +3,7 @@ import { getCityTime } from '../remote/cityTime'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-function createOnInputEnter ({ city, setCity, setTime, getCityTime }) {
+function createOnInputEnter ({ city, setCity, setTime, setCityUrl, getCityTime }) {
   return async ({ key, target }) => {
     if (key === 'Enter') {
       try {
@@ -16,12 +16,16 @@ function createOnInputEnter ({ city, setCity, setTime, getCityTime }) {
         setCity(resultCity)
         setTime(resultTime)
 
+        setCityUrl(resultCity)
+
         target.value = resultCity
       } catch (err) {
         const { city: resultCity, time: resultTime } = await getCityTime(city)
 
         setCity(resultCity)
         setTime(resultTime)
+
+        setCityUrl(resultCity)
 
         target.value = resultCity
       }
@@ -44,6 +48,8 @@ class InputBox extends Component {
       this.props.setTime(resultTime)
       this.props.setInitialCity(null)
 
+      this.props.setCityUrl(resultCity)
+
       this.textInput.value = resultCity
     } catch (err) {
       const { city: resultCity, time: resultTime } = await getCityTime(this.props.city)
@@ -52,12 +58,14 @@ class InputBox extends Component {
       this.props.setTime(resultTime)
       this.props.setInitialCity(null)
 
+      this.props.setCityUrl(resultCity)
+
       this.textInput.value = resultCity
     }
   }
 
   render () {
-    const onInputEnter = createOnInputEnter({ city: this.props.city, setCity: this.props.setCity, setTime: this.props.setTime, getCityTime })
+    const onInputEnter = createOnInputEnter({ city: this.props.city, setCity: this.props.setCity, setTime: this.props.setTime, setCityUrl: this.props.setCityUrl, getCityTime })
 
     return (
       <div className='InputBox'>

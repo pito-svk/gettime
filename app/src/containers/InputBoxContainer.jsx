@@ -1,6 +1,7 @@
 import InputBox from '../components/InputBox'
 import { connect } from 'react-redux'
 import querystring from 'querystring'
+import { push } from 'react-router-redux'
 
 const mapStateToProps = ({ store, routing }) => {
   const query = querystring.parse(routing.location.search.substring(1))
@@ -20,6 +21,12 @@ const mapDispatchToProps = dispatch => {
     },
     setTime: time => {
       dispatch({ type: 'SET_TIME', time })
+    },
+    setCityUrl: city => {
+      dispatch(push({
+        location: '/',
+        search: `?city=${city}`
+      }))
     }
   }
 }
