@@ -25,7 +25,7 @@ exports.getCityCoordinates = cityName => {
     .then(resp => {
       try {
         // TODO: Handle resp[0] for undefined values
-        const { lat, lng, namedetails, address } = resp[0]
+        const { lat, lon: lng, namedetails, address } = resp[0]
         const alternativeNameOfCity = namedetails.alt_name
         const cityName = address.city || address.town
         let formattedCityName
