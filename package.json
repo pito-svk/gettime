@@ -15,6 +15,7 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "request-promise": "^4.2.2",
+    "tape": "^4.8.0",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-hot-middleware": "^2.21.0",
