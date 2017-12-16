@@ -25,10 +25,9 @@ exports.getCityCoordinates = cityName => {
     .then(resp => {
       try {
         // TODO: Handle resp[0] for undefined values
-        const lat = resp[0].lat
-        const lng = resp[0].lon
-        const alternativeNameOfCity = resp[0].namedetails.alt_name
-        const cityName = resp[0].address.city || resp[0].address.town
+        const { lat, lng, namedetails, address } = resp[0]
+        const alternativeNameOfCity = namedetails.alt_name
+        const cityName = address.city || address.town
         let formattedCityName
 
         // TODO: Fix Jerusalem -> Jerkku bug
