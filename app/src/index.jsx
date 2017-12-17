@@ -4,7 +4,11 @@ import './styles/index.css'
 import createApp from './components/App'
 import storeReducer from './store'
 import { Provider } from 'react-redux'
-import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import {
+  ConnectedRouter,
+  routerReducer,
+  routerMiddleware
+} from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -29,4 +33,5 @@ ReactDOM.render(
       <App />
     </ConnectedRouter>
   </Provider>,
-  document.getElementById('root'))
+  document.getElementById('root')
+)
