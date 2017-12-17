@@ -74,6 +74,7 @@ class InputBox extends Component {
           defaultValue={this.props.initialCity || this.props.city}
           onKeyPress={onInputEnter}
           onFocus={moveFocusAtEnd}
+          spellCheck={false}
           autoFocus />
       </div>
     )
