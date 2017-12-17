@@ -23,19 +23,20 @@ const mapDispatchToProps = dispatch => {
       dispatch({ type: 'SET_TIME', time })
     },
     setCityUrl: city => {
-      dispatch(push({
-        location: '/',
-        search: `?city=${city}`
-      }))
+      dispatch(
+        push({
+          location: '/',
+          search: `?city=${city}`
+        })
+      )
     }
   }
 }
 
 export default React => {
-  const InputBoxWithReduxStore = connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(InputBox)
+  const InputBoxWithReduxStore = connect(mapStateToProps, mapDispatchToProps)(
+    InputBox
+  )
 
   return InputBoxWithReduxStore
 }
