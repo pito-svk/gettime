@@ -11,17 +11,21 @@ function initCompiler () {
 exports.compileAndHotReload = app => {
   const compiler = initCompiler()
 
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    hot: true,
-    publicPath: '/'
-  }))
+  app.use(
+    webpackDevMiddleware(compiler, {
+      noInfo: true,
+      hot: true,
+      publicPath: '/'
+    })
+  )
 
-  app.use(webpackHotMiddleware(compiler, {
-    log: console.log,
-    hot: true,
-    reload: true
-  }))
+  app.use(
+    webpackHotMiddleware(compiler, {
+      log: console.log,
+      hot: true,
+      reload: true
+    })
+  )
 
   app.use('*', function (req, res, next) {
     var filename = path.join(compiler.outputPath, 'index.html')

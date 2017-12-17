@@ -18,17 +18,17 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter')
 const REACT_APP = /^REACT_APP_/i
 
 const raw = Object.keys(process.env)
-    .filter(key => REACT_APP.test(key))
-    .reduce(
-      (env, key) => {
-        env[key] = process.env[key]
-        return env
-      },
+  .filter(key => REACT_APP.test(key))
+  .reduce(
+    (env, key) => {
+      env[key] = process.env[key]
+      return env
+    },
   {
     NODE_ENV: process.env.NODE_ENV || 'development',
     PUBLIC_URL: ''
   }
-    )
+  )
 
 const stringified = {
   'process.env': Object.keys(raw).reduce((env, key) => {
@@ -60,7 +60,8 @@ module.exports = {
     chunkFilename: 'static/js/[name].chunk.js',
     path: buildPath,
     publicPath: '/',
-    devtoolModuleFilenameTemplate: info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+    devtoolModuleFilenameTemplate: info =>
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   },
   resolve: {
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
@@ -73,9 +74,7 @@ module.exports = {
       ),
       'react-native': 'react-native-web'
     },
-    plugins: [
-      new ModuleScopePlugin(srcPath, [packageJsonPath])
-    ]
+    plugins: [new ModuleScopePlugin(srcPath, [packageJsonPath])]
   },
   module: {
     strictExportPresence: true,
@@ -96,7 +95,6 @@ module.exports = {
             },
             loader: require.resolve('eslint-loader')
           }
-
         ],
         include: srcPath
       },
