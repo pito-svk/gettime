@@ -3,7 +3,13 @@ import { getCityTime } from '../remote/cityTime'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-function createOnInputEnter ({ city, setCity, setTime, setCityUrl, getCityTime }) {
+function createOnInputEnter ({
+  city,
+  setCity,
+  setTime,
+  setCityUrl,
+  getCityTime
+}) {
   return async ({ key, target }) => {
     if (key === 'Enter') {
       try {
@@ -11,7 +17,9 @@ function createOnInputEnter ({ city, setCity, setTime, setCityUrl, getCityTime }
 
         setTime('...')
 
-        const { city: resultCity, time: resultTime } = await getCityTime(inputCity)
+        const { city: resultCity, time: resultTime } = await getCityTime(
+          inputCity
+        )
 
         setCity(resultCity)
         setTime(resultTime)
@@ -42,7 +50,9 @@ const moveFocusAtEnd = ({ target }) => {
 class InputBox extends Component {
   async componentDidMount () {
     try {
-      const { city: resultCity, time: resultTime } = await getCityTime(this.props.initialCity || this.props.city)
+      const { city: resultCity, time: resultTime } = await getCityTime(
+        this.props.initialCity || this.props.city
+      )
 
       this.props.setCity(resultCity)
       this.props.setTime(resultTime)
@@ -52,7 +62,9 @@ class InputBox extends Component {
 
       this.textInput.value = resultCity
     } catch (err) {
-      const { city: resultCity, time: resultTime } = await getCityTime(this.props.city)
+      const { city: resultCity, time: resultTime } = await getCityTime(
+        this.props.city
+      )
 
       this.props.setCity(resultCity)
       this.props.setTime(resultTime)
@@ -65,17 +77,26 @@ class InputBox extends Component {
   }
 
   render () {
-    const onInputEnter = createOnInputEnter({ city: this.props.city, setCity: this.props.setCity, setTime: this.props.setTime, setCityUrl: this.props.setCityUrl, getCityTime })
+    const onInputEnter = createOnInputEnter({
+      city: this.props.city,
+      setCity: this.props.setCity,
+      setTime: this.props.setTime,
+      setCityUrl: this.props.setCityUrl,
+      getCityTime
+    })
 
     return (
       <div className='InputBox'>
         <input
-          ref={(input) => { this.textInput = input }}
+          ref={input => {
+            this.textInput = input
+          }}
           defaultValue={this.props.initialCity || this.props.city}
           onKeyPress={onInputEnter}
           onFocus={moveFocusAtEnd}
           spellCheck={false}
-          autoFocus />
+          autoFocus
+        />
       </div>
     )
   }
