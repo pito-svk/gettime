@@ -20,6 +20,13 @@ function spellCheck (text) {
     })
 }
 
+function onlyCityOrTown (arr) {
+  return arr.filter(item => {
+    return item.type === 'city' ||
+      item.type === 'town'
+  })
+}
+
 // TODO: check how can throw error when resp doesn't have status code 200, maybe put option: simple into request options?
 exports.getCityCoordinates = cityName => {
   const url = 'http://nominatim.openstreetmap.org/search'
@@ -38,10 +45,7 @@ exports.getCityCoordinates = cityName => {
   }
 
   return request.get(url, requestOptions)
-    .then(resp => resp.filter(item => {
-      return item.type === 'city' ||
-        item.type === 'town'
-    }))
+    .then(resp => onlyCityOrTown(resp))
     .then(async resp => {
       try {
         // TODO: Handle resp[0] for undefined values
@@ -79,10 +83,7 @@ exports.getCityCoordinates = cityName => {
           }
 
           return request.get(url, requestOptions)
-            .then(resp => resp.filter(item => {
-              return item.type === 'city' ||
-                item.type === 'town'
-            }))
+            .then(resp => onlyCityOrTown(resp))
             .then(resp => {
               try {
                 // TODO: Handle resp[0] for undefined values
