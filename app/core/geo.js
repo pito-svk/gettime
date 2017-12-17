@@ -47,11 +47,8 @@ function parseCoordsAndFormattedCity (response) {
   return { lat, lng, formattedCityName }
 }
 
-// TODO: check how can throw error when resp doesn't have status code 200, maybe put option: simple into request options?
-exports.getCityCoordinates = cityName => {
-  const url = 'http://nominatim.openstreetmap.org/search'
-
-  const requestOptions = {
+function composeGetCityCoordinatesRequestOptions (cityName) {
+  return {
     headers: {
       'Accept-Language': 'en'
     },
@@ -63,6 +60,12 @@ exports.getCityCoordinates = cityName => {
       namedetails: 1
     }
   }
+}
+
+exports.getCityCoordinates = cityName => {
+  const url = 'http://nominatim.openstreetmap.org/search'
+
+  const requestOptions = composeGetCityCoordinatesRequestOptions(cityName)
 
   return request.get(url, requestOptions)
     .then(resp => onlyCityOrTown(resp))
@@ -73,18 +76,7 @@ exports.getCityCoordinates = cityName => {
         try {
           const spellCheckedCityName = await spellCheck(cityName)
 
-          const requestOptions = {
-            headers: {
-              'Accept-Language': 'en'
-            },
-            json: true,
-            qs: {
-              q: decodeURIComponent(spellCheckedCityName),
-              format: 'jsonv2',
-              addressdetails: 1,
-              namedetails: 1
-            }
-          }
+          const requestOptions = composeGetCityCoordinatesRequestOptions(spellCheckedCityName)
 
           return request.get(url, requestOptions)
             .then(resp => onlyCityOrTown(resp))
