@@ -73,34 +73,34 @@ exports.getCityCoordinates = cityName => {
     const requestOptions = composeGetCityCoordinatesRequestOptions(cityName)
 
     return request
-    .get(url, requestOptions)
-    .then(resp => onlyCityOrTown(resp))
-    .then(async resp => {
-      try {
-        return parseCoordsAndFormattedCity(resp)
-      } catch (err) {
+      .get(url, requestOptions)
+      .then(resp => onlyCityOrTown(resp))
+      .then(async resp => {
         try {
-          const spellCheckedCityName = await spellCheck(cityName)
-
-          const requestOptions = composeGetCityCoordinatesRequestOptions(
-            spellCheckedCityName
-          )
-
-          return request
-            .get(url, requestOptions)
-            .then(resp => onlyCityOrTown(resp))
-            .then(resp => {
-              try {
-                return parseCoordsAndFormattedCity(resp)
-              } catch (err) {
-                return Promise.reject(err)
-              }
-            })
+          return parseCoordsAndFormattedCity(resp)
         } catch (err) {
-          return Promise.reject(err)
+          try {
+            const spellCheckedCityName = await spellCheck(cityName)
+
+            const requestOptions = composeGetCityCoordinatesRequestOptions(
+              spellCheckedCityName
+            )
+
+            return request
+              .get(url, requestOptions)
+              .then(resp => onlyCityOrTown(resp))
+              .then(resp => {
+                try {
+                  return parseCoordsAndFormattedCity(resp)
+                } catch (err) {
+                  return Promise.reject(err)
+                }
+              })
+          } catch (err) {
+            return Promise.reject(err)
+          }
         }
-      }
-    })
+      })
   } catch (err) {
     winston.error(err)
     throw err
