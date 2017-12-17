@@ -9,7 +9,7 @@ function spellCheck (text) {
     },
     json: true,
     qs: {
-      text,
+      text: decodeURIComponent(text),
       mode: 'proof'
     }
   }
