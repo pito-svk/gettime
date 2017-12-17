@@ -1,4 +1,5 @@
 const request = require('request-promise')
+const winston = require('winston')
 
 function spellCheck (text) {
   const url = 'https://api.cognitive.microsoft.com/bing/v7.0/spellcheck'
@@ -16,6 +17,10 @@ function spellCheck (text) {
 
   return request.post(url, requestOptions).then(resp => {
     return resp.flaggedTokens[0].suggestions[0].suggestion
+  })
+  .catch(err => {
+    winston.error(err)
+    throw err
   })
 }
 
@@ -62,11 +67,12 @@ function composeGetCityCoordinatesRequestOptions (cityName) {
 }
 
 exports.getCityCoordinates = cityName => {
-  const url = 'http://nominatim.openstreetmap.org/search'
+  try {
+    const url = 'http://nominatim.openstreetmap.org/search'
 
-  const requestOptions = composeGetCityCoordinatesRequestOptions(cityName)
+    const requestOptions = composeGetCityCoordinatesRequestOptions(cityName)
 
-  return request
+    return request
     .get(url, requestOptions)
     .then(resp => onlyCityOrTown(resp))
     .then(async resp => {
@@ -95,6 +101,10 @@ exports.getCityCoordinates = cityName => {
         }
       }
     })
+  } catch (err) {
+    winston.error(err)
+    throw err
+  }
 }
 
 exports.getTimezoneId = ({ lat, lng }) => {
