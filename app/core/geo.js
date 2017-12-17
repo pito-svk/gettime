@@ -14,16 +14,14 @@ function spellCheck (text) {
     }
   }
 
-  return request.post(url, requestOptions)
-    .then(resp => {
-      return resp.flaggedTokens[0].suggestions[0].suggestion
-    })
+  return request.post(url, requestOptions).then(resp => {
+    return resp.flaggedTokens[0].suggestions[0].suggestion
+  })
 }
 
 function onlyCityOrTown (arr) {
   return arr.filter(item => {
-    return item.type === 'city' ||
-      item.type === 'town'
+    return item.type === 'city' || item.type === 'town'
   })
 }
 
@@ -34,11 +32,12 @@ function parseCoordsAndFormattedCity (response) {
   const cityName = address.city || address.town
   let formattedCityName
 
-  if (alternativeNameOfCity &&
-            cityName &&
-            alternativeNameOfCity.length > 6 &&
-            alternativeNameOfCity.length <
-            cityName.length) {
+  if (
+    alternativeNameOfCity &&
+    cityName &&
+    alternativeNameOfCity.length > 6 &&
+    alternativeNameOfCity.length < cityName.length
+  ) {
     formattedCityName = alternativeNameOfCity
   } else {
     formattedCityName = cityName
@@ -67,7 +66,8 @@ exports.getCityCoordinates = cityName => {
 
   const requestOptions = composeGetCityCoordinatesRequestOptions(cityName)
 
-  return request.get(url, requestOptions)
+  return request
+    .get(url, requestOptions)
     .then(resp => onlyCityOrTown(resp))
     .then(async resp => {
       try {
@@ -76,9 +76,12 @@ exports.getCityCoordinates = cityName => {
         try {
           const spellCheckedCityName = await spellCheck(cityName)
 
-          const requestOptions = composeGetCityCoordinatesRequestOptions(spellCheckedCityName)
+          const requestOptions = composeGetCityCoordinatesRequestOptions(
+            spellCheckedCityName
+          )
 
-          return request.get(url, requestOptions)
+          return request
+            .get(url, requestOptions)
             .then(resp => onlyCityOrTown(resp))
             .then(resp => {
               try {
@@ -106,6 +109,5 @@ exports.getTimezoneId = ({ lat, lng }) => {
     }
   }
 
-  return request.get(url, requestOptions)
-    .then(resp => resp.timezoneId)
+  return request.get(url, requestOptions).then(resp => resp.timezoneId)
 }
