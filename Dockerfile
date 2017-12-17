@@ -11,4 +11,6 @@ COPY . /usr/src/app
 
 RUN npm run build
 
+ENV NODE_ENV production
+
 CMD ["node", "app/server.js"]
