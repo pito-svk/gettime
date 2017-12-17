@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "babel-watch app/server.js",
-    "build": "NODE_ENV='production' && webpack -p --config app/webpack.config.dev.js",
+    "build": "NODE_ENV=production webpack -p --config app/webpack.config.dev.js",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
