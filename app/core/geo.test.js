@@ -55,3 +55,27 @@ test('getCityCoordinates = Brtislava', async t => {
 
   t.end()
 })
+
+test('getCityCoordinates = jerusalem', async t => {
+  const { formattedCityName } = await getCityCoordinates('jerusalem')
+
+  t.equal(formattedCityName, 'Jerusalem')
+
+  t.end()
+})
+
+test('getCityCoordinates = Jerusalem', async t => {
+  const { formattedCityName } = await getCityCoordinates('Jerusalem')
+
+  t.equal(formattedCityName, 'Jerusalem')
+
+  t.end()
+})
+
+test('getCityCoordinates = Hamburg', async t => {
+  const { formattedCityName } = await getCityCoordinates('Hamburg')
+
+  t.equal(formattedCityName, 'Hamburg')
+
+  t.end()
+})
