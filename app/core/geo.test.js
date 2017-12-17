@@ -17,10 +17,10 @@ test('getCityCoordinates = new york', async t => {
   t.end()
 })
 
-// test('getCityCoordinates = newyork', async t => {
-//   const { formattedCityName } = await getCityCoordinates('newyork')
+test('getCityCoordinates = newyork', async t => {
+  const { formattedCityName } = await getCityCoordinates('newyork')
 
-//   t.equal(formattedCityName, 'New York')
+  t.equal(formattedCityName, 'New York')
 
-//   t.end()
-// })
+  t.end()
+})
