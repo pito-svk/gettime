@@ -30,14 +30,9 @@ exports.getCityCoordinates = cityName => {
         const cityName = address.city || address.town
         let formattedCityName
 
-        // TODO: Fix Jerusalem -> Jerkku bug
-
-        // TODO: Solve the case of New York City into New York as
-        // alternative name
         if (alternativeNameOfCity &&
             cityName &&
-            // TODO: Solve Brazilia -> RA 1 as alternate name bug
-            alternativeNameOfCity.length > 4 &&
+            alternativeNameOfCity.length > 6 &&
             alternativeNameOfCity.length <
             cityName.length) {
           formattedCityName = alternativeNameOfCity
