@@ -12,7 +12,8 @@ exports.getOffset = async (req, res, next) => {
 
     const timezoneId = await getTimezoneId({ lat, lng })
 
-    const cityTime = moment.utc()
+    const cityTime = moment
+      .utc()
       .tz(timezoneId)
       .format('hh:mm A')
 
@@ -22,8 +23,6 @@ exports.getOffset = async (req, res, next) => {
     })
   } catch (err) {
     winston.log('error', err)
-    return res
-      .status(400)
-      .json(err)
+    return res.status(400).json(err)
   }
 }
