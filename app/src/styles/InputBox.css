@@ -3,7 +3,8 @@
   padding: 10px;
 }
 
-.InputBox input, button {
+.InputBox input,
+button {
   border: none;
   background: none;
   outline: 0;
