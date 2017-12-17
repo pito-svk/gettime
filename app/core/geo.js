@@ -27,6 +27,26 @@ function onlyCityOrTown (arr) {
   })
 }
 
+function parseCoordsAndFormattedCity (response) {
+  // TODO: Handle resp[0] for undefined values
+  const { lat, lon: lng, namedetails, address } = response[0]
+  const alternativeNameOfCity = namedetails.alt_name
+  const cityName = address.city || address.town
+  let formattedCityName
+
+  if (alternativeNameOfCity &&
+            cityName &&
+            alternativeNameOfCity.length > 6 &&
+            alternativeNameOfCity.length <
+            cityName.length) {
+    formattedCityName = alternativeNameOfCity
+  } else {
+    formattedCityName = cityName
+  }
+
+  return { lat, lng, formattedCityName }
+}
+
 // TODO: check how can throw error when resp doesn't have status code 200, maybe put option: simple into request options?
 exports.getCityCoordinates = cityName => {
   const url = 'http://nominatim.openstreetmap.org/search'
@@ -48,23 +68,7 @@ exports.getCityCoordinates = cityName => {
     .then(resp => onlyCityOrTown(resp))
     .then(async resp => {
       try {
-        // TODO: Handle resp[0] for undefined values
-        const { lat, lon: lng, namedetails, address } = resp[0]
-        const alternativeNameOfCity = namedetails.alt_name
-        const cityName = address.city || address.town
-        let formattedCityName
-
-        if (alternativeNameOfCity &&
-            cityName &&
-            alternativeNameOfCity.length > 6 &&
-            alternativeNameOfCity.length <
-            cityName.length) {
-          formattedCityName = alternativeNameOfCity
-        } else {
-          formattedCityName = cityName
-        }
-
-        return { lat, lng, formattedCityName }
+        return parseCoordsAndFormattedCity(resp)
       } catch (err) {
         try {
           const spellCheckedCityName = await spellCheck(cityName)
@@ -86,23 +90,7 @@ exports.getCityCoordinates = cityName => {
             .then(resp => onlyCityOrTown(resp))
             .then(resp => {
               try {
-                // TODO: Handle resp[0] for undefined values
-                const { lat, lon: lng, namedetails, address } = resp[0]
-                const alternativeNameOfCity = namedetails.alt_name
-                const cityName = address.city || address.town
-                let formattedCityName
-
-                if (alternativeNameOfCity &&
-                    cityName &&
-                    alternativeNameOfCity.length > 6 &&
-                    alternativeNameOfCity.length <
-                    cityName.length) {
-                  formattedCityName = alternativeNameOfCity
-                } else {
-                  formattedCityName = cityName
-                }
-
-                return { lat, lng, formattedCityName }
+                return parseCoordsAndFormattedCity(resp)
               } catch (err) {
                 return Promise.reject(err)
               }
