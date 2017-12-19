@@ -64,7 +64,7 @@ module.exports = {
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   },
   resolve: {
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: ['.js', '.json'],
     modules: ['node_modules', nodeModulesPath].concat(
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
