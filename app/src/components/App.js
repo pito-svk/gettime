@@ -1,6 +1,6 @@
 import '../styles/App.css'
 
-import createInputBoxContainer from '../containers/InputBoxContainer.jsx'
+import createInputBoxContainer from '../containers/InputBoxContainer'
 import createTimeResult from './TimeResult'
 import createFooter from './Footer'
 
