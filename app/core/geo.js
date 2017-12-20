@@ -6,7 +6,11 @@ function getCachedSpellCheckedCity (redisInstance, cityName) {
   return redisInstance.getAsync(cityName)
 }
 
-function spellCheck (text) {
+function saveSpellCheckedCityToCache (redisInstance, inputCity, spellCheckedCityName) {
+  return redisInstance.setAsync(inputCity, spellCheckedCityName)
+}
+
+function spellCheck (redisInstance, text) {
   const url = 'https://api.cognitive.microsoft.com/bing/v7.0/spellcheck'
 
   const requestOptions = {
@@ -20,8 +24,21 @@ function spellCheck (text) {
     }
   }
 
-  return request.post(url, requestOptions).then(resp => {
-    return resp.flaggedTokens[0].suggestions[0].suggestion
+  return request.post(url, requestOptions).then(async resp => {
+    let spellCheckedCityName
+
+    if (resp &&
+        resp.flaggedTokens &&
+        resp.flaggedTokens[0] &&
+        resp.flaggedTokens[0].suggestions &&
+        resp.flaggedTokens[0].suggestions[0] &&
+        resp.flaggedTokens[0].suggestions[0].suggestion) {
+      spellCheckedCityName = resp.flaggedTokens[0].suggestions[0].suggestion
+
+      await saveSpellCheckedCityToCache(redisInstance, text, spellCheckedCityName)
+    }
+
+    return spellCheckedCityName
   })
   .catch(err => {
     winston.error(err)
@@ -89,7 +106,7 @@ exports.getCityCoordinates = cityName => {
 
             const cachedSpellCheckedCity = await getCachedSpellCheckedCity(redisInstance, cityName)
 
-            const spellCheckedCityName = cachedSpellCheckedCity || await spellCheck(cityName)
+            const spellCheckedCityName = cachedSpellCheckedCity || await spellCheck(redisInstance, cityName)
 
             const requestOptions = composeGetCityCoordinatesRequestOptions(
               spellCheckedCityName
