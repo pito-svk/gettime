@@ -1,5 +1,10 @@
 const request = require('request-promise')
 const winston = require('winston')
+const { redisClient } = require('../utils/redis')
+
+function getCachedSpellCheckedCity (redisInstance, cityName) {
+  return redisInstance.getAsync(cityName)
+}
 
 function spellCheck (text) {
   const url = 'https://api.cognitive.microsoft.com/bing/v7.0/spellcheck'
@@ -80,7 +85,11 @@ exports.getCityCoordinates = cityName => {
           return parseCoordsAndFormattedCity(resp)
         } catch (err) {
           try {
-            const spellCheckedCityName = await spellCheck(cityName)
+            const redisInstance = redisClient()
+
+            const cachedSpellCheckedCity = await getCachedSpellCheckedCity(redisInstance, cityName)
+
+            const spellCheckedCityName = cachedSpellCheckedCity || await spellCheck(cityName)
 
             const requestOptions = composeGetCityCoordinatesRequestOptions(
               spellCheckedCityName
