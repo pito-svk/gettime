@@ -1,4 +1,4 @@
-import InputBox from '../components/InputBox'
+import createInputBox from '../components/InputBox'
 import { connect } from 'react-redux'
 import querystring from 'querystring'
 import { push } from 'react-router-redux'
@@ -34,6 +34,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default React => {
+  const InputBox = createInputBox(React)
+
   const InputBoxWithReduxStore = connect(mapStateToProps, mapDispatchToProps)(
     InputBox
   )
