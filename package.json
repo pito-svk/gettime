@@ -21,7 +21,7 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
     "winston": "^3.2.1",
-    "snyk": "^1.259.0"
+    "snyk": "^1.1024.0"
   },
   "scripts": {
     "start": "babel-watch app/server.js",
